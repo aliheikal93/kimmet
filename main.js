@@ -32,9 +32,11 @@ categorielist && categoriesopen.addEventListener("mouseleave", function() {
     let Categories = "0";
     let allproducts ;
     let fetchUrl = 'https://fakestoreapi.com/products';
-    document.addEventListener('DOMContentLoaded', function(){
 
+    document.addEventListener('DOMContentLoaded',reloadproduct)
+    document.addEventListener('DOMContentLoaded', loadcatg)
 
+      function loadcatg(){
       fetch('https://fakestoreapi.com/products/categories')
       .then(res=>res.json()).then(data =>  {
         // console.log(data)
@@ -52,72 +54,71 @@ categorielist && categoriesopen.addEventListener("mouseleave", function() {
          let onclickcat = document.getElementById(`onclickcat${Categories[i]}`);
          onclickcat.addEventListener("click",function () {
           fetchUrl = `https://fakestoreapi.com/products/category/${Categories[i]}`
-          alert (`link is ${fetchUrl}` )  
+            // alert (`link is ${fetchUrl}` )  
           return fetchUrl 
               })
-          onclickcat.addEventListener("click",function () {
-            function reloadDIV () {document.getElementById("secmain").innerHTML.reload}
-            alert ("dev reloaded" )          })
+          onclickcat.addEventListener("click",reloadproduct)
+          onclickcat.addEventListener("click",function(){})
 
 
                                                     }
                                            })
-
-        fetch(fetchUrl)
-        .then(res=>res.json()).then(data =>  {
-          // console.log(data)
-          allproducts = data
-          let secmain = document.getElementById("secmain");
-          for (let i = 0; i < allproducts.length; i++) {
-
-            let list  = document.createElement("div");
-           list.id = "products";
-           list.className = "contnet";
-           secmain.appendChild(list);
-           let loadproducts = document.getElementById("products");
-          //  console.log(loadproducts);
-           list.innerHTML += 
-           `<div class="card">
-              <div class="icon">
-                <img src="${allproducts[i].image}" alt="img${allproducts[i].id}">
-              </div>
-              <div class="info">
-                <h3>${allproducts[i].title}</h3>
-                <p>${allproducts[i].description.substring(0, 80)}
-                  <span class="pointsspan" id="points${allproducts[i].id}">...</span>
-                  <span class="spanmore" id="moreText${allproducts[i].id}">${allproducts[i].description}</span>
-                  <a  class="btnmore" id="textButton${allproducts[i].id}">Show More</a>
-                </p>
-              </div>
-              
-           </div>`;
-           let points = document.getElementById(`points${allproducts[i].id}`);
-           let showMoreText = document.getElementById(`moreText${allproducts[i].id}`);
-           let buttonText = document.getElementById(`textButton${allproducts[i].id}`); 
-           
-          //  console.log(points);
-          //  console.log(buttonText);
-          //  console.log(showMoreText);
-           buttonText.addEventListener("click",function () { 
-            if (points.style.display === "none") {
-                showMoreText.style.display = "none";
-                points.style.display = "inline";
-                buttonText.innerHTML = "Show More";
-            }
-            else {
-                showMoreText.style.display = "inline";
-                points.style.display = "none";
-                buttonText.innerHTML = "Show Less";
-            }}
-        );
-          }
-  
-
-
-                                             })
- 
-  })
+        
+  }
 
 
 
-    
+  function reloadproduct(){
+    fetch(fetchUrl)
+    .then(res=>res.json()).then(data =>  {
+      // console.log(data)
+      allproducts = data
+      let secmain = document.getElementById("secmain");
+      for (let i = 0; i < allproducts.length; i++) {
+
+        let list  = document.createElement("div");
+       list.id = "products";
+       list.className = "contnet";
+       secmain.appendChild(list);
+       let loadproducts = document.getElementById("products");
+      //  console.log(loadproducts);
+       list.innerHTML += 
+       `<div class="card">
+          <div class="icon">
+            <img src="${allproducts[i].image}" alt="img${allproducts[i].id}">
+          </div>
+          <div class="info">
+            <h3>${allproducts[i].title}</h3>
+            <p>${allproducts[i].description.substring(0, 80)}
+              <span class="pointsspan" id="points${allproducts[i].id}">...</span>
+              <span class="spanmore" id="moreText${allproducts[i].id}">${allproducts[i].description}</span>
+              <a  class="btnmore" id="textButton${allproducts[i].id}">Show More</a>
+            </p>
+          </div>
+          
+       </div>`;
+       let points = document.getElementById(`points${allproducts[i].id}`);
+       let showMoreText = document.getElementById(`moreText${allproducts[i].id}`);
+       let buttonText = document.getElementById(`textButton${allproducts[i].id}`); 
+       
+      //  console.log(points);
+      //  console.log(buttonText);
+      //  console.log(showMoreText);
+       buttonText.addEventListener("click",function () { 
+        if (points.style.display === "none") {
+            showMoreText.style.display = "none";
+            points.style.display = "inline";
+            buttonText.innerHTML = "Show More";
+        }
+        else {
+            showMoreText.style.display = "inline";
+            points.style.display = "none";
+            buttonText.innerHTML = "Show Less";
+        }}
+    );
+      }
+
+
+
+                                         })
+                                        }
