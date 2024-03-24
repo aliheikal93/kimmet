@@ -30,8 +30,7 @@ categorielist && categoriesopen.addEventListener("mouseleave", function() {
 
     let clickpathcat ="/categ.html";
     let Categories = "0";
-    let allproducts ;
-    let fetchUrl = 'https://fakestoreapi.com/products';
+    let allproducts 
     document.addEventListener('DOMContentLoaded', function(){
 
 
@@ -40,65 +39,45 @@ categorielist && categoriesopen.addEventListener("mouseleave", function() {
         // console.log(data)
         Categories = data
         for (let i = 0; i < Categories.length; i++) {
-
-          let catlist = document.getElementById("categorielist");
-
-          let alist  = document.createElement("a");
-          alist.id = `onclickcat${Categories[i]}`;
-          alist.className = `catlisthover`;
-          alist.href = "#0"
-          alist.innerText = `${Categories[i]}`
-          catlist.appendChild(alist);
-         let onclickcat = document.getElementById(`onclickcat${Categories[i]}`);
-         onclickcat.addEventListener("click",function () {
-          fetchUrl = `https://fakestoreapi.com/products/category/${Categories[i]}`
-          alert (`link is ${fetchUrl}` )  
-          return fetchUrl 
-              })
-          onclickcat.addEventListener("click",function () {
-            function reloadDIV () {document.getElementById("secmain").innerHTML.reload}
-            alert ("dev reloaded" )          })
-
-
+          let list = document.getElementById("categorielist");
+         list.innerHTML += `<a id="onclickcat${[i]}" class="catlisthover" href="${Categories[i]}.html">${Categories[i]}</a>`;
                                                     }
                                            })
 
-        fetch(fetchUrl)
+
+        fetch('https://fakestoreapi.com/products')
         .then(res=>res.json()).then(data =>  {
           // console.log(data)
           allproducts = data
-          let secmain = document.getElementById("secmain");
           for (let i = 0; i < allproducts.length; i++) {
-
+            let secmain = document.getElementById("secmain");
             let list  = document.createElement("div");
            list.id = "products";
            list.className = "contnet";
            secmain.appendChild(list);
            let loadproducts = document.getElementById("products");
           //  console.log(loadproducts);
-           list.innerHTML += 
-           `<div class="card">
-              <div class="icon">
-                <img src="${allproducts[i].image}" alt="img${allproducts[i].id}">
-              </div>
-              <div class="info">
-                <h3>${allproducts[i].title}</h3>
-                <p>${allproducts[i].description.substring(0, 80)}
-                  <span class="pointsspan" id="points${allproducts[i].id}">...</span>
-                  <span class="spanmore" id="moreText${allproducts[i].id}">${allproducts[i].description}</span>
-                  <a  class="btnmore" id="textButton${allproducts[i].id}">Show More</a>
-                </p>
-              </div>
-              
+           loadproducts.innerHTML += `<div class="card">
+           <div class="icon">
+           <img src="${allproducts[i].image}" alt="img${allproducts[i].id}">
+           </div>
+           <div class="info">
+           <h3>${allproducts[i].title}</h3>
+           <p>${allproducts[i].description.substring(0, 150)}
+           <span class="pointsspan" id="points${allproducts[i].id}">...</span>
+           <span id="moreText${allproducts[i].id}">${allproducts[i].description}</span>
+           </p>
+           <button id="textButton${allproducts[i].id}">Show More</button>
+           </div>
+           </div>
            </div>`;
            let points = document.getElementById(`points${allproducts[i].id}`);
            let showMoreText = document.getElementById(`moreText${allproducts[i].id}`);
            let buttonText = document.getElementById(`textButton${allproducts[i].id}`); 
-           
           //  console.log(points);
           //  console.log(buttonText);
           //  console.log(showMoreText);
-           buttonText.addEventListener("click",function () { 
+           buttonText.addEventListener("click",function () {  
             if (points.style.display === "none") {
                 showMoreText.style.display = "none";
                 points.style.display = "inline";
