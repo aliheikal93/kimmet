@@ -57,14 +57,19 @@ categorielist && categoriesopen.addEventListener("mouseleave", function() {
             // alert (`link is ${fetchUrl}` )  
           return fetchUrl 
               })
-          onclickcat.addEventListener("click",reloadproduct)
-          onclickcat.addEventListener("click",function(){})
-
+          onclickcat.addEventListener("click",reloadproduct);
+          // onclickcat.addEventListener("click",clearsec);
+          onclickcat.addEventListener("click",function(){
+            let title = document.getElementById("title");
+            title.textContent = `${Categories[i]}`
+          });
 
                                                     }
                                            })
         
   }
+
+  
 
 
 
@@ -80,8 +85,6 @@ categorielist && categoriesopen.addEventListener("mouseleave", function() {
        list.id = "products";
        list.className = "contnet";
        secmain.appendChild(list);
-       let loadproducts = document.getElementById("products");
-      //  console.log(loadproducts);
        list.innerHTML += 
        `<div class="card">
           <div class="icon">
@@ -104,7 +107,7 @@ categorielist && categoriesopen.addEventListener("mouseleave", function() {
       //  console.log(points);
       //  console.log(buttonText);
       //  console.log(showMoreText);
-       buttonText.addEventListener("click",function () { 
+       buttonText.addEventListener("onclick",function () { 
         if (points.style.display === "none") {
             showMoreText.style.display = "none";
             points.style.display = "inline";
@@ -122,3 +125,7 @@ categorielist && categoriesopen.addEventListener("mouseleave", function() {
 
                                          })
                                         }
+
+//  function clearsec (){
+// list.remove()
+// }
