@@ -55,10 +55,12 @@ categorielist && categoriesopen.addEventListener("mouseleave", function() {
          onclickcat.addEventListener("click",function () {
           fetchUrl = `https://fakestoreapi.com/products/category/${Categories[i]}`
             // alert (`link is ${fetchUrl}` )  
-          return fetchUrl 
               })
+          onclickcat.addEventListener("click",function(){
+            let list = document.getElementById("products");
+              list.remove();
+          });
           onclickcat.addEventListener("click",reloadproduct);
-          // onclickcat.addEventListener("click",clearsec);
           onclickcat.addEventListener("click",function(){
             let title = document.getElementById("title");
             title.textContent = `${Categories[i]}`
@@ -79,35 +81,59 @@ categorielist && categoriesopen.addEventListener("mouseleave", function() {
       // console.log(data)
       allproducts = data
       let secmain = document.getElementById("secmain");
+      let list  = document.createElement("div");
+      list.id = "products";
+      list.className = "contnet";
+      secmain.appendChild(list);
+      
       for (let i = 0; i < allproducts.length; i++) {
-
-        let list  = document.createElement("div");
-       list.id = "products";
-       list.className = "contnet";
-       secmain.appendChild(list);
-       list.innerHTML += 
-       `<div class="card">
-          <div class="icon">
-            <img src="${allproducts[i].image}" alt="img${allproducts[i].id}">
-          </div>
-          <div class="info">
-            <h3>${allproducts[i].title}</h3>
-            <p>${allproducts[i].description.substring(0, 80)}
-              <span class="pointsspan" id="points${allproducts[i].id}">...</span>
-              <span class="spanmore" id="moreText${allproducts[i].id}">${allproducts[i].description}</span>
-              <a  class="btnmore" id="textButton${allproducts[i].id}">Show More</a>
-            </p>
-          </div>
-          
-       </div>`;
-       let points = document.getElementById(`points${allproducts[i].id}`);
-       let showMoreText = document.getElementById(`moreText${allproducts[i].id}`);
-       let buttonText = document.getElementById(`textButton${allproducts[i].id}`); 
        
-      //  console.log(points);
-      //  console.log(buttonText);
-      //  console.log(showMoreText);
-       buttonText.addEventListener("onclick",function () { 
+      let divcard  = document.createElement("div");
+      divcard.className = "card"
+      list.appendChild(divcard)
+
+      let divicon = document.createElement("div");
+      divicon.className = "icon";
+      divcard.appendChild(divicon);
+
+      let imgicon = document.createElement("img");
+      imgicon.src = `${allproducts[i].image}`;
+      imgicon.alt = `img${allproducts[i].id}`;
+      divicon.appendChild(imgicon);
+
+      let divinfo = document.createElement("div");
+      divinfo.className = "info";
+      divcard.appendChild(divinfo);
+
+      let titleH3 = document.createElement("h3");
+      titleH3.innerHTML = `${allproducts[i].title}`;
+      divinfo.appendChild(titleH3);
+
+      let pdiv = document.createElement("p");
+      pdiv.innerHTML = `${allproducts[i].description.substring(0, 80)}`;
+      pdiv.appendChild(divinfo);
+
+      let points = document.createElement("span");
+      points.className = "pointsspan";
+      points.id = `points${allproducts[i].id}`;
+      points.innerHTML = "...";
+      pdiv.appendChild(points);
+
+      let showMoreText = document.createElement("span");
+      showMoreText.className = "spanmore";
+      showMoreText.id = `moreText${allproducts[i].id}`;
+      showMoreText.innerHTML = `${allproducts[i].description}`;
+      pdiv.appendChild(showMoreText);
+
+      let buttonText = document.createElement("a");
+      buttonText.className = "btnmore";
+      buttonText.id = `textButton${allproducts[i].id}`;
+      buttonText.innerHTML = "Show More";
+      pdiv.appendChild(buttonText);
+
+     
+     
+       buttonText.addEventListener("click",function () { 
         if (points.style.display === "none") {
             showMoreText.style.display = "none";
             points.style.display = "inline";
@@ -126,6 +152,3 @@ categorielist && categoriesopen.addEventListener("mouseleave", function() {
                                          })
                                         }
 
-//  function clearsec (){
-// list.remove()
-// }
