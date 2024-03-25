@@ -89,8 +89,8 @@ categorielist && categoriesopen.addEventListener("mouseleave", function() {
       for (let i = 0; i < allproducts.length; i++) {
        
       let divcard  = document.createElement("div");
-      divcard.className = "card"
-      list.appendChild(divcard)
+      divcard.className = "card";
+      list.appendChild(divcard);
 
       let divicon = document.createElement("div");
       divicon.className = "icon";
@@ -132,7 +132,7 @@ categorielist && categoriesopen.addEventListener("mouseleave", function() {
       pdiv.appendChild(buttonText);
 
      
-     
+     ////see more //
        buttonText.addEventListener("click",function () { 
         if (points.style.display === "none") {
             showMoreText.style.display = "none";
@@ -145,6 +145,10 @@ categorielist && categoriesopen.addEventListener("mouseleave", function() {
             buttonText.innerHTML = "Show Less";
         }}
     );
+        ///////
+
+        console.log("you are here");
+
       }
 
 
