@@ -397,16 +397,30 @@ border: var(--orang) solid 0.5px;
 
 .info p{
     margin-top: 8px;
+    margin-bottom: 5px;
+    padding: 8px;
     font-size: 10px;
     font-weight: 400;
     overflow: hidden;
     line-height: 15px;
-
-
 }
 
 .pointsspan{
+    display: inline;
+}
+
+.spanmore {
     display: none;
+}
+
+.btnmore{
+    color: var(--orang);
+    font-size: 0.8rem;
+     text-decoration: none;    
+     cursor: pointer;
+     display: inline;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .projects .contnet{

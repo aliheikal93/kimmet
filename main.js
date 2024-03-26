@@ -30,73 +30,129 @@ categorielist && categoriesopen.addEventListener("mouseleave", function() {
 
     let clickpathcat ="/categ.html";
     let Categories = "0";
-    let allproducts 
-    document.addEventListener('DOMContentLoaded', function(){
+    let allproducts ;
+    let fetchUrl = 'https://fakestoreapi.com/products';
 
+    document.addEventListener('DOMContentLoaded',reloadproduct)
+    document.addEventListener('DOMContentLoaded', loadcatg)
 
+      function loadcatg(){
       fetch('https://fakestoreapi.com/products/categories')
       .then(res=>res.json()).then(data =>  {
         // console.log(data)
         Categories = data
         for (let i = 0; i < Categories.length; i++) {
-          let list = document.getElementById("categorielist");
-         list.innerHTML += `<a id="onclickcat${[i]}" class="catlisthover" href="${Categories[i]}.html">${Categories[i]}</a>`;
+
+          let catlist = document.getElementById("categorielist");
+
+          let alist  = document.createElement("a");
+          alist.id = `onclickcat${Categories[i]}`;
+          alist.className = `catlisthover`;
+          alist.href = "#0"
+          alist.innerText = `${Categories[i]}`
+          catlist.appendChild(alist);
+         let onclickcat = document.getElementById(`onclickcat${Categories[i]}`);
+         onclickcat.addEventListener("click",function () {
+          fetchUrl = `https://fakestoreapi.com/products/category/${Categories[i]}`
+            // alert (`link is ${fetchUrl}` )  
+              })
+          onclickcat.addEventListener("click",function(){
+            let list = document.getElementById("products");
+              list.remove();
+          });
+          onclickcat.addEventListener("click",reloadproduct);
+          onclickcat.addEventListener("click",function(){
+            let title = document.getElementById("title");
+            title.textContent = `${Categories[i]}`
+          });
+
                                                     }
                                            })
+        
+  }
 
-
-        fetch('https://fakestoreapi.com/products')
-        .then(res=>res.json()).then(data =>  {
-          // console.log(data)
-          allproducts = data
-          for (let i = 0; i < allproducts.length; i++) {
-            let secmain = document.getElementById("secmain");
-            let list  = document.createElement("div");
-           list.id = "products";
-           list.className = "contnet";
-           secmain.appendChild(list);
-           let loadproducts = document.getElementById("products");
-          //  console.log(loadproducts);
-           loadproducts.innerHTML += `<div class="card">
-           <div class="icon">
-           <img src="${allproducts[i].image}" alt="img${allproducts[i].id}">
-           </div>
-           <div class="info">
-           <h3>${allproducts[i].title}</h3>
-           <p>${allproducts[i].description.substring(0, 150)}
-           <span class="pointsspan" id="points${allproducts[i].id}">...</span>
-           <span id="moreText${allproducts[i].id}">${allproducts[i].description}</span>
-           </p>
-           <button id="textButton${allproducts[i].id}">Show More</button>
-           </div>
-           </div>
-           </div>`;
-           let points = document.getElementById(`points${allproducts[i].id}`);
-           let showMoreText = document.getElementById(`moreText${allproducts[i].id}`);
-           let buttonText = document.getElementById(`textButton${allproducts[i].id}`); 
-          //  console.log(points);
-          //  console.log(buttonText);
-          //  console.log(showMoreText);
-           buttonText.addEventListener("click",function () {  
-            if (points.style.display === "none") {
-                showMoreText.style.display = "none";
-                points.style.display = "inline";
-                buttonText.innerHTML = "Show More";
-            }
-            else {
-                showMoreText.style.display = "inline";
-                points.style.display = "none";
-                buttonText.innerHTML = "Show Less";
-            }}
-        );
-          }
   
 
 
-                                             })
- 
-  })
+
+  function reloadproduct(){
+    fetch(fetchUrl)
+    .then(res=>res.json()).then(data =>  {
+      // console.log(data)
+      allproducts = data
+      let secmain = document.getElementById("secmain");
+      let list  = document.createElement("div");
+      list.id = "products";
+      list.className = "contnet";
+      secmain.appendChild(list);
+      
+      for (let i = 0; i < allproducts.length; i++) {
+       
+      let divcard  = document.createElement("div");
+      divcard.className = "card";
+      list.appendChild(divcard);
+
+      let divicon = document.createElement("div");
+      divicon.className = "icon";
+      divcard.appendChild(divicon);
+
+      let imgicon = document.createElement("img");
+      imgicon.src = `${allproducts[i].image}`;
+      imgicon.alt = `img${allproducts[i].id}`;
+      divicon.appendChild(imgicon);
+
+      let divinfo = document.createElement("div");
+      divinfo.className = "info";
+      divcard.appendChild(divinfo);
+
+      let titleH3 = document.createElement("h3");
+      titleH3.innerHTML = `${allproducts[i].title}`;
+      divinfo.appendChild(titleH3);
+
+      let pdiv = document.createElement("p");
+      pdiv.innerHTML = `${allproducts[i].description.substring(0, 80)}`;
+      pdiv.appendChild(divinfo);
+
+      let points = document.createElement("span");
+      points.className = "pointsspan";
+      points.id = `points${allproducts[i].id}`;
+      points.innerHTML = "...";
+      pdiv.appendChild(points);
+
+      let showMoreText = document.createElement("span");
+      showMoreText.className = "spanmore";
+      showMoreText.id = `moreText${allproducts[i].id}`;
+      showMoreText.innerHTML = `${allproducts[i].description}`;
+      pdiv.appendChild(showMoreText);
+
+      let buttonText = document.createElement("a");
+      buttonText.className = "btnmore";
+      buttonText.id = `textButton${allproducts[i].id}`;
+      buttonText.innerHTML = "Show More";
+      pdiv.appendChild(buttonText);
+
+     
+     ////see more //
+       buttonText.addEventListener("click",function () { 
+        if (points.style.display === "none") {
+            showMoreText.style.display = "none";
+            points.style.display = "inline";
+            buttonText.innerHTML = "Show More";
+        }
+        else {
+            showMoreText.style.display = "inline";
+            points.style.display = "none";
+            buttonText.innerHTML = "Show Less";
+        }}
+    );
+        ///////
+
+        console.log("you are here");
+
+      }
 
 
 
-    
+                                         })
+                                        }
+
