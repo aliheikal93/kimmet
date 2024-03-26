@@ -111,7 +111,7 @@ categorielist && categoriesopen.addEventListener("mouseleave", function() {
 
       let pdiv = document.createElement("p");
       pdiv.innerHTML = `${allproducts[i].description.substring(0, 80)}`;
-      pdiv.appendChild(divinfo);
+      divinfo.appendChild(pdiv);
 
       let points = document.createElement("span");
       points.className = "pointsspan";
