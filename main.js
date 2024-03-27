@@ -48,7 +48,7 @@ categorielist && categoriesopen.addEventListener("mouseleave", function() {
           let alist  = document.createElement("a");
           alist.id = `onclickcat${Categories[i]}`;
           alist.className = `catlisthover`;
-          alist.href = "#0"
+          alist.href = "#secmain"
           alist.innerText = `${Categories[i]}`
           catlist.appendChild(alist);
          let onclickcat = document.getElementById(`onclickcat${Categories[i]}`);
@@ -65,6 +65,31 @@ categorielist && categoriesopen.addEventListener("mouseleave", function() {
             let title = document.getElementById("title");
             title.textContent = `${Categories[i]}`
           });
+
+          let catsidenav = document.getElementById("catsidenav");
+          let acatsidenav =document.createElement("a");      
+          acatsidenav.className = "acatsidenav";
+          acatsidenav.href = "#secmain";
+          acatsidenav.innerText = `${Categories[i]}`;
+          acatsidenav.id = (`onclicksidenav${Categories[i]}`);
+          catsidenav.appendChild(acatsidenav);
+          let onclicksidenav = document.getElementById(`onclicksidenav${Categories[i]}`);
+
+          onclicksidenav.addEventListener("click",function () {
+            fetchUrl = `https://fakestoreapi.com/products/category/${Categories[i]}`
+              // alert (`link is ${fetchUrl}` )  
+                })
+                onclicksidenav.addEventListener("click",function(){
+              let list = document.getElementById("products");
+                list.remove();
+            });
+            onclicksidenav.addEventListener("click",reloadproduct);
+            onclicksidenav.addEventListener("click",function(){
+              let title = document.getElementById("title");
+              title.textContent = `${Categories[i]}`
+            });
+
+
 
                                                     }
                                            })
